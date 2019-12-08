@@ -1,0 +1,5 @@
+-split the file into 8 smaller files-
+split -b 435m iowa.csv
+
+-upload file from local machine to HDFS-
+scp /Users/mario/Desktop/iowa/pt1.csv mmonter3@54.187.148.25:/home/mmonter3/iowa
