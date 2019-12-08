@@ -16,4 +16,4 @@ bottle_volume int, state_bottle_cost string, state_bottle_retail string,
 bottles_sold int, sale_dollar string, sale_volume_liter int, sale_volume_gallon int)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ' '
 STORED AS TEXTFILE LOCATION '/user/mmonter3/iowa'
-TBLPROPERTIES ('skip.header.line.count'='2');
+TBLPROPERTIES ('skip.header.line.count'='1');
