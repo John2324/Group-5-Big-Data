@@ -1,2 +1,5 @@
 # Ignore the best-artwork directory
 best_artwork/
+
+#Ignore the doc files the professor provided for the project
+instructions/
