@@ -22,7 +22,7 @@ FROM alcohol
 GROUP BY category
 ORDER BY total_dollar_sales DESC LIMIT 15;
 
-SELECT category, SUM(sale_volume_liter) AS total_dollar_volume
+SELECT category, SUM(sale_volume_liter) AS total_volume_sales
 FROM alcohol
 GROUP BY category
-ORDER BY total_dollar_volume DESC LIMIT 15;
+ORDER BY total_volume_sales DESC LIMIT 15;
