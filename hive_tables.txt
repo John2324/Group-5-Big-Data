@@ -1,62 +1,6 @@
 -- From original csv file, remove store_location, category, category_name
 
--- HiveQL test
-DROP TABLE IF EXISTS iowa;
---create table weblogs on comma-delimited website log data
-CREATE EXTERNAL TABLE IF NOT EXISTS iowa(invoice string,
-date_sold string,
-store_number int,
-store_name string,
-address string,
-city string,
-zipcode int,
-county_num int,
-count_name string,
-vendor_num int,
-vendor_name string,
-item_num int,
-item_name string,
-pack int,
-bottle_volume bigint,
-state_bottle_cost string,
-state_bottle_retail string,
-bottles_sold bigint,
-sale_dollar string,
-sale_volume_liter string,
-sale_volume_gallon string)
-ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
-STORED AS TEXTFILE LOCATION '/user/jmonte80/liquorsales/'
-TBLPROPERTIES ('skip.header.line.count'='1');
-
-
-
-DROP TABLE IF EXISTS iowa2;
---create table weblogs on comma-delimited website log data
-CREATE EXTERNAL TABLE IF NOT EXISTS iowa2(invoice string,
-date_sold string,
-store_number int,
-store_name string,
-address string,
-city string,
-zipcode int,
-county_num int,
-count_name string,
-vendor_num int,
-vendor_name string,
-item_num int,
-item_name string,
-pack int,
-bottle_volume bigint,
-state_bottle_cost string,
-state_bottle_retail string,
-bottles_sold bigint,
-sale_dollar string,
-sale_volume_liter string,
-sale_volume_gallon string)
-ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
-STORED AS TEXTFILE LOCATION '/user/jmonte80/liquorsales2/'
-TBLPROPERTIES ('skip.header.line.count'='1');
-
+-- Mario's Table
 -creation of alcohol table- 
 CREATE EXTERNAL TABLE IF NOT EXISTS alcohol(invoice string,
 date_sold string,
@@ -84,14 +28,6 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 STORED AS TEXTFILE LOCATION '/user/mmonter3/alcohol/'
 TBLPROPERTIES ('skip.header.line.count'='1');
 
--create a table with all columns-
-CREATE table iowas
-AS 
-SELECT *
-FROM iowa
-UNION ALL
-SELECT *
-FROM iowa2;
 
 -create a view with specific columns-
 CREATE VIEW dollarvolume
@@ -100,3 +36,31 @@ FROM iowa
 UNION ALL
 SELECT item_name, bottles_sold, sale_dollar, sale_volume_gallon
 FROM iowa2;
+
+
+
+-- John's Table iowa_liquor (pt1.csv and pt2.csv combined)
+CREATE EXTERNAL TABLE IF NOT EXISTS iowa_liquor(invoice string, 
+date_sold string, 
+store_number bigint,
+store_name string, 
+address string, 
+city string, 
+zipcode bigint, 
+county_num int, 
+count_name string, 
+vendor_num int, 
+vendor_name string, 
+item_num bigint, 
+item_name string, 
+pack int,
+bottle_volume bigint, 
+state_bottle_cost string, 
+state_bottle_retail string,
+bottles_sold bigint, 
+sale_dollar bigint, 
+sale_volume_liter bigint, 
+sale_volume_gallon bigint)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+STORED AS TEXTFILE LOCATION '/user/jmonte80/iowa_liquor/'
+TBLPROPERTIES ('skip.header.line.count'='1');
