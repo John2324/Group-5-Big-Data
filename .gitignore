@@ -6,3 +6,6 @@ instructions/
 
 # Ignore the dataset directory
 dataset/
+
+# ignor .DS_Store
+.DS_Store
