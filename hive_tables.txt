@@ -1,23 +1,8 @@
--- Add the Hive code used for building each table
-
-DROP TABLE IF EXISTS iowa;
---create table weblogs on space-delimited website log data
-CREATE EXTERNAL TABLE IF NOT EXISTS iowa(invoice int, date date, store_number int, 
-store_name string, address string, city string, zipcode string, store_location string, 
-county_num int, count_name string, category_num int, category_name string, 
-vendor_num int, vendor_name string, item_num int, item_name string, pack int, 
-bottle_volume int, state_bottle_cost string, state_bottle_retail string, 
-bottles_sold int, sale_dollar string, sale_volume_liter int, sale_volume_gallon int)
-ROW FORMAT DELIMITED FIELDS TERMINATED BY ' '
-STORED AS TEXTFILE LOCATION '/user/mmonter3/iowa'
-TBLPROPERTIES ('skip.header.line.count'='2');
-
--- THIS is JOHN'S table schema
--- From the original table, remove store_location, category, and category_name
+-- From original csv file, remove store_location, category, category_name
 
 -- HiveQL test
 DROP TABLE IF EXISTS iowa;
---create table weblogs on space-delimited website log data
+--create table weblogs on comma-delimited website log data
 CREATE EXTERNAL TABLE IF NOT EXISTS iowa(invoice string, 
 date_sold string, 
 store_number int,
@@ -40,5 +25,34 @@ sale_dollar string,
 sale_volume_liter string, 
 sale_volume_gallon string)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
-STORED AS TEXTFILE LOCATION '/user/jmonte80/liquorsales'
+STORED AS TEXTFILE LOCATION '/user/jmonte80/liquorsales/'
+TBLPROPERTIES ('skip.header.line.count'='1');
+
+
+
+DROP TABLE IF EXISTS iowa2;
+--create table weblogs on comma-delimited website log data
+CREATE EXTERNAL TABLE IF NOT EXISTS iowa2(invoice string, 
+date_sold string, 
+store_number int,
+store_name string, 
+address string, 
+city string, 
+zipcode int, 
+county_num int, 
+count_name string, 
+vendor_num int, 
+vendor_name string, 
+item_num int, 
+item_name string, 
+pack int,
+bottle_volume bigint, 
+state_bottle_cost string, 
+state_bottle_retail string,
+bottles_sold bigint, 
+sale_dollar string, 
+sale_volume_liter string, 
+sale_volume_gallon string)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+STORED AS TEXTFILE LOCATION '/user/jmonte80/liquorsales2/'
 TBLPROPERTIES ('skip.header.line.count'='1');
