@@ -6,7 +6,7 @@
 
 -- STEP 1: LOAD YOUR DATA
 -- REMEMBER TO MODIFY THE DIRECTORY TO YOUR FILE
-data = LOAD './project/iowa_liquor.csv' AS (invoice: chararray, 
+data = LOAD './project/iowa_liquor.csv' USING PigStorage(',') AS (invoice: chararray, 
 date_sold: chararray, 
 store_number: int,
 store_name: chararray, 
@@ -30,13 +30,13 @@ sale_volume_gallon: int);
 
 
 -- STEP 2 FILTER DATA by drink "Jim Beam"
-jims = FILTER data BY vendor_num == 65;
+jims = FILTER data BY item_name == 'Jim Beam';
 
 -- STEP 3 Group results by county
-group_county = GROUP jims BY count_name;
+group_county = GROUP jims BY (count_name, item_name);
 
 -- STEP 4 GENERATE TOTAL SUM OF bottles_sold AND displaying county, item name, and number of bottles sold
-totals = FOREACH group_county GENERATE jims.count_name, jims.item_name, SUM(jims.bottles_sold) AS total_bottles_sold;
+totals = FOREACH group_county GENERATE FLATTEN(group) AS (county, liquor), SUM(jims.bottles_sold) AS total_bottles_sold;
 
 -- STEP 5 Sort from highest to lowest
 sort_bottles = ORDER totals BY total_bottles_sold DESC;
