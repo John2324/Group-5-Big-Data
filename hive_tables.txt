@@ -3,8 +3,8 @@
 -- HiveQL test
 DROP TABLE IF EXISTS iowa;
 --create table weblogs on comma-delimited website log data
-CREATE EXTERNAL TABLE IF NOT EXISTS iowa(invoice string, 
-date_sold string, 
+CREATE EXTERNAL TABLE IF NOT EXISTS iowa(invoice string,
+date_sold string,
 store_number int,
 store_name string,
 address string,
@@ -32,27 +32,43 @@ TBLPROPERTIES ('skip.header.line.count'='1');
 
 DROP TABLE IF EXISTS iowa2;
 --create table weblogs on comma-delimited website log data
-CREATE EXTERNAL TABLE IF NOT EXISTS iowa2(invoice string, 
-date_sold string, 
+CREATE EXTERNAL TABLE IF NOT EXISTS iowa2(invoice string,
+date_sold string,
 store_number int,
-store_name string, 
-address string, 
-city string, 
-zipcode int, 
-county_num int, 
-count_name string, 
-vendor_num int, 
-vendor_name string, 
-item_num int, 
-item_name string, 
+store_name string,
+address string,
+city string,
+zipcode int,
+county_num int,
+count_name string,
+vendor_num int,
+vendor_name string,
+item_num int,
+item_name string,
 pack int,
-bottle_volume bigint, 
-state_bottle_cost string, 
+bottle_volume bigint,
+state_bottle_cost string,
 state_bottle_retail string,
-bottles_sold bigint, 
-sale_dollar string, 
-sale_volume_liter string, 
+bottles_sold bigint,
+sale_dollar string,
+sale_volume_liter string,
 sale_volume_gallon string)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 STORED AS TEXTFILE LOCATION '/user/jmonte80/liquorsales2/'
 TBLPROPERTIES ('skip.header.line.count'='1');
+
+-create a view with all columns-
+CREATE VIEW iowas
+AS SELECT *
+FROM iowa
+UNION ALL
+SELECT *
+FROM iowa2;
+
+-create a view with specific columns-
+CREATE VIEW dollarvolume
+AS SELECT item_name, bottles_sold, sale_dollar, sale_volume_gallon
+FROM iowa
+UNION ALL
+SELECT item_name, bottles_sold, sale_dollar, sale_volume_gallon
+FROM iowa2;
