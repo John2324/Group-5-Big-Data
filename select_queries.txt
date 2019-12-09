@@ -1,0 +1,17 @@
+-- Select statement for top 10 selling bottles
+SELECT category, item_name, SUM(bottles_sold) AS total_bottles_sold, SUM(sale_dollar) AS total_sales_dollars
+FROM alcohol
+GROUP BY category, item_name
+ORDER BY total_sales_dollars DESC LIMIT 10;
+
+-- Best selling alcohol by category
+SELECT category, SUM(bottles_sold) AS total_bottles_sold
+FROM alcohol
+GROUP BY category
+Order BY total_bottles_sold DESC LIMIT 20;
+
+-- County with the most alcohol sold 
+SELECT count_name, SUM(bottles_sold) AS total_bottles_sold, SUM(sale_dollar) AS total_sales_dollars
+FROM alcohol
+GROUP BY count_name
+ORDER BY total_bottles_sold DESC LIMIT 10;
