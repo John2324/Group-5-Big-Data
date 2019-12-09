@@ -1,19 +1,41 @@
--split the file into 8 smaller files-
-split -b 435m iowa.csv
+-split the file into 20 smaller files (so we can open csv in excel)- 
+split -b 174m iowa.csv
 
 -upload file from local machine to HDFS-
-scp /Users/mario/Desktop/iowa/pt1.csv mmonter3@54.187.148.25:/home/mmonter3/iowa
+scp /Users/mario/Desktop/iowa/pt2.csv mmonter3@54.187.148.25:/home/mmonter3
+
+-create alcohol folder-
+hdfs dfs -mkdir alcohol
+
+-put the csv file into the alcohol folder- 
+hdfs dfs -put pt2.csv alchol
+
+-use beeline to access database-
+beeline -u jdbc:hive2://localhost:10000/default -n mmonter3
 
 -HiveQL-
-
-DROP TABLE IF EXISTS iowa;
---create table weblogs on space-delimited website log data
-CREATE EXTERNAL TABLE IF NOT EXISTS iowa(invoice int, date date, store_number int,
-store_name string, address string, city string, zipcode string, store_location string,
-county_num int, count_name string, category_num int, category_name string,
-vendor_num int, vendor_name string, item_num int, item_name string, pack int,
-bottle_volume int, state_bottle_cost string, state_bottle_retail string,
-bottles_sold int, sale_dollar string, sale_volume_liter int, sale_volume_gallon int)
-ROW FORMAT DELIMITED FIELDS TERMINATED BY ' '
-STORED AS TEXTFILE LOCATION '/user/mmonter3/iowa'
+CREATE EXTERNAL TABLE IF NOT EXISTS alcohol(invoice string,
+date_sold string,
+store_number int,
+store_name string,
+address string,
+city string,
+zipcode int,
+county_num int,
+count_name string,
+category string,
+vendor_num int,
+vendor_name string,
+item_num int,
+item_name string,
+pack int,
+bottle_volume bigint,
+state_bottle_cost string,
+state_bottle_retail string,
+bottles_sold bigint,
+sale_dollar bigint,
+sale_volume_liter bigint,
+sale_volume_gallon bigint)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+STORED AS TEXTFILE LOCATION '/user/mmonter3/alcohol/'
 TBLPROPERTIES ('skip.header.line.count'='1');
