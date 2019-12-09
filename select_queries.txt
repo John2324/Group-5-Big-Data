@@ -10,8 +10,19 @@ FROM alcohol
 GROUP BY category
 Order BY total_bottles_sold DESC LIMIT 20;
 
--- County with the most alcohol sold 
+-- County with the most alcohol sold
 SELECT count_name, SUM(bottles_sold) AS total_bottles_sold, SUM(sale_dollar) AS total_sales_dollars
 FROM iowa_liquor
 GROUP BY count_name
 ORDER BY total_bottles_sold DESC LIMIT 10;
+
+-- Dollar sales vs Volume sales --
+SELECT category, SUM(sale_dollar) AS total_dollar_sales
+FROM alcohol
+GROUP BY category
+ORDER BY total_dollar_sales DESC LIMIT 15;
+
+SELECT category, SUM(sale_volume_liter) AS total_dollar_volume
+FROM alcohol
+GROUP BY category
+ORDER BY total_dollar_volume DESC LIMIT 15;
