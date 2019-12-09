@@ -1,5 +1,8 @@
--split the file into 20 smaller files (so we can open csv in excel)- 
+-split the file into 20 smaller files (so we can open csv in excel)-
 split -b 174m iowa.csv
+
+-add the .csv to the newly created files-
+for i in *; do mv "$i" "$i.csv"; done
 
 -upload file from local machine to HDFS-
 scp /Users/mario/Desktop/iowa/pt2.csv mmonter3@54.187.148.25:/home/mmonter3
@@ -7,7 +10,7 @@ scp /Users/mario/Desktop/iowa/pt2.csv mmonter3@54.187.148.25:/home/mmonter3
 -create alcohol folder-
 hdfs dfs -mkdir alcohol
 
--put the csv file into the alcohol folder- 
+-put the csv file into the alcohol folder-
 hdfs dfs -put pt2.csv alchol
 
 -use beeline to access database-
