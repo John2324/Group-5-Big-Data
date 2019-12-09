@@ -74,4 +74,4 @@ AND count_name IS NOT NULL
 AND item_name IS NOT NULL
 AND bottles_sold IS NOT NULL
 AND sale_dollar IS NOT NULL 
-LIMIT 1048570;
+LIMIT 400000;
