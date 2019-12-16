@@ -1,4 +1,3 @@
--- From original csv file, remove store_location, category, category_name
 
 -- Mario's Table
 -creation of alcohol table- 
