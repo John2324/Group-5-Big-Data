@@ -1,8 +1,42 @@
+
+-- HIVE table for dataset
+CREATE EXTERNAL TABLE IF NOT EXISTS iowa_liquor_sales(invoice string, 
+date_sold string, 
+store_number int,
+store_name string, 
+address string, 
+city string, 
+zipcode int,
+geo_location string,
+county_num int, 
+county_name string,
+category string,
+category_name string, 
+vendor_num int, 
+vendor_name string, 
+item_num int, 
+item_name string, 
+pack int,
+bottle_volume_ml int, 
+state_bottle_cost string, 
+state_bottle_retail string,
+bottles_sold int, 
+sale_dollar int, 
+sale_volume_liter int, 
+sale_volume_gallon int)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+STORED AS TEXTFILE LOCATION '/user/jmonte80/iowa_liquor_sales/'
+TBLPROPERTIES ('skip.header.line.count'='1');
+
+
+
+
 -- Select statement for top 10 selling bottles
 SELECT item_name, SUM(bottles_sold) AS total_bottles_sold, SUM(sale_dollar) AS total_sales_dollars
 FROM iowa_liquor_sales
 GROUP BY item_name
 ORDER BY total_sales_dollars DESC LIMIT 10;
+
 
 -- Best selling alcohol by category
 SELECT category_name, SUM(bottles_sold) AS total_bottles_sold
@@ -10,17 +44,13 @@ FROM iowa_liquor_sales
 GROUP BY category_name
 Order BY total_bottles_sold DESC LIMIT 20;
 
--- County with the most alcohol sold
-SELECT county_name, SUM(bottles_sold) AS total_bottles_sold, SUM(sale_dollar) AS total_sales_dollars
-FROM iowa_liquor_sales
-GROUP BY county_name
-ORDER BY total_bottles_sold DESC LIMIT 10;
 
 -- Dollar sales vs Volume sales --
 SELECT category_name, SUM(sale_dollar) AS total_dollar_sales
 FROM iowa_liquor_sales
 GROUP BY category
 ORDER BY total_dollar_sales DESC LIMIT 15;
+
 
 SELECT category, SUM(sale_volume_liter) AS total_volume_sales
 FROM iowa_liquor_sales
