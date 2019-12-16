@@ -1,28 +1,28 @@
 -- Select statement for top 10 selling bottles
 SELECT item_name, SUM(bottles_sold) AS total_bottles_sold, SUM(sale_dollar) AS total_sales_dollars
-FROM iowa_liquor
+FROM iowa_liquor_sales
 GROUP BY item_name
 ORDER BY total_sales_dollars DESC LIMIT 10;
 
 -- Best selling alcohol by category
-SELECT category, SUM(bottles_sold) AS total_bottles_sold
-FROM alcohol
-GROUP BY category
+SELECT category_name, SUM(bottles_sold) AS total_bottles_sold
+FROM iowa_liquor_sales
+GROUP BY category_name
 Order BY total_bottles_sold DESC LIMIT 20;
 
 -- County with the most alcohol sold
-SELECT count_name, SUM(bottles_sold) AS total_bottles_sold, SUM(sale_dollar) AS total_sales_dollars
-FROM iowa_liquor
-GROUP BY count_name
+SELECT county_name, SUM(bottles_sold) AS total_bottles_sold, SUM(sale_dollar) AS total_sales_dollars
+FROM iowa_liquor_sales
+GROUP BY county_name
 ORDER BY total_bottles_sold DESC LIMIT 10;
 
 -- Dollar sales vs Volume sales --
-SELECT category, SUM(sale_dollar) AS total_dollar_sales
-FROM alcohol
+SELECT category_name, SUM(sale_dollar) AS total_dollar_sales
+FROM iowa_liquor_sales
 GROUP BY category
 ORDER BY total_dollar_sales DESC LIMIT 15;
 
 SELECT category, SUM(sale_volume_liter) AS total_volume_sales
-FROM alcohol
+FROM iowa_liquor_sales
 GROUP BY category
 ORDER BY total_volume_sales DESC LIMIT 15;

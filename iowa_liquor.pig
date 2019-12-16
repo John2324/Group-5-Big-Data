@@ -1,12 +1,12 @@
 -- This pig script is for the iowa_liquor.csv
 -- that should be already uploaded into LOCAL FILE SYSTEM
 -- The script will analyze and filter the data
--- with the top 10 counties who bought "  "
+-- with the top 10 counties who bought "Jim Beam"
 
 
 -- STEP 1: LOAD YOUR DATA
 -- REMEMBER TO MODIFY THE DIRECTORY TO YOUR FILE
-data = LOAD './project/iowa_liquor_sales.csv' USING PigStorage(',') AS (invoice: chararray, 
+data = LOAD '/user/jmonte80/iowa_liquor_sales/iowa_liquor_sales.csv' USING PigStorage(',') AS (invoice: chararray, 
 date_sold: chararray, 
 store_number: int,
 store_name: chararray, 
@@ -16,8 +16,8 @@ zipcode: int,
 geo_location: chararray, 
 county_num: int, 
 county_name: chararray,
-category chararray,
-category_name chararray,  
+category: chararray,
+category_name: chararray,  
 vendor_num: int, 
 vendor_name: chararray, 
 item_num: int, 
