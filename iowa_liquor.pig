@@ -6,15 +6,18 @@
 
 -- STEP 1: LOAD YOUR DATA
 -- REMEMBER TO MODIFY THE DIRECTORY TO YOUR FILE
-data = LOAD './project/iowa_liquor.csv' USING PigStorage(',') AS (invoice: chararray, 
+data = LOAD './project/iowa_liquor_sales.csv' USING PigStorage(',') AS (invoice: chararray, 
 date_sold: chararray, 
 store_number: int,
 store_name: chararray, 
 address: chararray, 
 city: chararray, 
-zipcode: int, 
+zipcode: int,
+geo_location: chararray, 
 county_num: int, 
-count_name: chararray, 
+county_name: chararray,
+category chararray,
+category_name chararray,  
 vendor_num: int, 
 vendor_name: chararray, 
 item_num: int, 
@@ -33,7 +36,7 @@ sale_volume_gallon: int);
 jims = FILTER data BY item_name == 'Jim Beam';
 
 -- STEP 3 Group results by county
-group_county = GROUP jims BY (count_name, item_name);
+group_county = GROUP jims BY (county_name, item_name);
 
 -- STEP 4 GENERATE TOTAL SUM OF bottles_sold AND displaying county, item name, and number of bottles sold
 totals = FOREACH group_county GENERATE FLATTEN(group) AS (county, liquor), SUM(jims.bottles_sold) AS total_bottles_sold;

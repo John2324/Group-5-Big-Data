@@ -1,76 +1,49 @@
 
--- Mario's Table
--creation of alcohol table- 
-CREATE EXTERNAL TABLE IF NOT EXISTS alcohol(invoice string,
-date_sold string,
-store_number int,
-store_name string,
-address string,
-city string,
-zipcode int,
-county_num int,
-count_name string,
-category string,
-vendor_num int,
-vendor_name string,
-item_num int,
-item_name string,
-pack int,
-bottle_volume bigint,
-state_bottle_cost string,
-state_bottle_retail string,
-bottles_sold bigint,
-sale_dollar bigint,
-sale_volume_liter bigint,
-sale_volume_gallon bigint)
-ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
-STORED AS TEXTFILE LOCATION '/user/mmonter3/alcohol/'
-TBLPROPERTIES ('skip.header.line.count'='1');
-
-
--- John's Table iowa_liquor (pt1.csv and pt2.csv combined)
-CREATE EXTERNAL TABLE IF NOT EXISTS iowa_liquor(invoice string, 
+-- HIVE table for dataset
+CREATE EXTERNAL TABLE IF NOT EXISTS iowa_liquor_sales(invoice string, 
 date_sold string, 
-store_number bigint,
+store_number int,
 store_name string, 
 address string, 
 city string, 
-zipcode bigint, 
+zipcode int,
+geo_location string,
 county_num int, 
-count_name string, 
+county_name string,
+category string,
+category_name string, 
 vendor_num int, 
 vendor_name string, 
-item_num bigint, 
+item_num int, 
 item_name string, 
 pack int,
-bottle_volume bigint, 
+bottle_volume_ml int, 
 state_bottle_cost string, 
 state_bottle_retail string,
-bottles_sold bigint, 
-sale_dollar bigint, 
-sale_volume_liter bigint, 
-sale_volume_gallon bigint)
+bottles_sold int, 
+sale_dollar int, 
+sale_volume_liter int, 
+sale_volume_gallon int)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
-STORED AS TEXTFILE LOCATION '/user/jmonte80/iowa_liquor/'
+STORED AS TEXTFILE LOCATION '/user/jmonte80/iowa_liquor_sales/'
 TBLPROPERTIES ('skip.header.line.count'='1');
 
 
--- Create a table from iowa_liquor with specific columns and removing NULL values
+-- Create a table from iowa_liquor_sales with specific columns and removing NULL values
 -- To be used for EXCEL MAP
 CREATE TABLE IF NOT EXISTS iowa_listing
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY ','
 STORED AS TEXTFILE
 LOCATION "/user/jmonte80/iowa_listing" 
-AS SELECT store_number, store_name, address, city, zipcode, county_num, count_name, item_name, bottles_sold, sale_dollar FROM iowa_liquor 
+AS SELECT store_number, store_name, address, city, zipcode, county_num, county_name, item_name, bottles_sold, sale_dollar FROM iowa_liquor_sales 
 WHERE store_number IS NOT NULL 
 AND store_name IS NOT NULL 
 AND address IS NOT NULL
 AND city IS NOT NULL
 AND zipcode IS NOT NULL
 AND county_num IS NOT NULL
-AND count_name IS NOT NULL
+AND county_name IS NOT NULL
 AND item_name IS NOT NULL
 AND bottles_sold IS NOT NULL
-AND sale_dollar IS NOT NULL 
-LIMIT 400000;
+AND sale_dollar IS NOT NULL;
