@@ -47,5 +47,5 @@ sort_bottles = ORDER totals BY total_bottles_sold DESC;
 -- STEP 6 OUTPUT TOP 10 COUNTIES WITH THE MOST JIM BEAM BOTTLES SOLD
 top_county = LIMIT sort_bottles 10;
 
--- STEEP 7 DISPLAY OUTPUT OF top_county
+-- STEP 7 DISPLAY OUTPUT OF top_county
 DUMP top_county;
